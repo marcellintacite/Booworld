@@ -1,0 +1,105 @@
+<% const MBTI = [ 'INFP', 'INFJ', 'ENFP', 'ENFJ', 'INTJ', 'INTP', 'ENTP', 'ENTJ', 'ISFP', 'ISFJ', 'ESFP', 'ESFJ', 'ISTP', 'ISTJ', 'ESTP', 'ESTJ']
+const Enneagram = [
+"1w2", "2w3", "3w2", "3w4", "4w3", "4w5", "5w4", "5w6", "6w5", "6w7", "7w6", "7w8", "8w7", "8w9", "9w8", "9w1"
+]
+const Zodiac = [
+"Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+]
+
+let showdata = comments;
+
+console.log(showdata)
+%>
+
+<div class="comments">
+  <div class="comments_head">
+    <h2>Comments</h2>
+    <button class="voteBtn" onclick="showAdd()">VOTE/COMMENT</button>
+  </div>
+  <div class="filter_personality">
+    <span class="filter_item active">All</span>
+    <span class="filter_item">MBTI</span>
+    <span class="filter_item">Enneagram</span>
+    <span class="filter_item">Zodiac</span>
+  </div>
+  <div class="sort_items">
+    <button class="btn active" onclick="">best</button>
+    <button class="btn" onclick="showAdd()">recent</button>
+  </div>
+
+  <div class="add_comment">
+     <div class="add_comment_head">
+       <image src="<%= profile.image %>"
+        alt="<%= profile.image %>" class="img"/>
+        <span><%= profile.name %> </span>
+     </div>
+     <form method="POST" action="/">
+      <input type="text" name="title" id="title" placeholder="Title" class="title_input" onchange="checkTitle()">
+      <div class="select_group">
+        <select name="mbti" class="select_box" required>
+          <option selected disabled>MBTI</option>
+          <% MBTI.forEach(option => { %> 
+            <option value='<%=option  %> '><%= option %> </option>
+          <% }) %> 
+        </select>
+        <select name="Enneagram" class="select_box" required>
+          <option selected disabled>Enneagram</option>
+          <% Enneagram.forEach(option => { %> 
+            <option value='<%=option  %> '><%= option %> </option>
+          <% }) %> 
+        </select>
+        <select name="zodiac" class="select_box" required >
+          <option selected disabled>Zodiac</option>
+          <% Zodiac.forEach(option => { %> 
+            <option value='<%=option  %> '><%= option %> </option>
+          <% }) %> 
+        </select>
+      </div>
+      <textarea name="details" id="" placeholder="Share your typology reasoning by commenting here" class="details"></textarea>
+      <div class="btn_are">
+        
+        <button type="submit" class="form_sub">
+          <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+    </form>
+  </div>
+
+ 
+  <div class="comments_boxes">
+    <%
+      showdata.forEach(element => {%>
+        <div class="comment_box">
+            <div class="comment_head">
+              <image src="<%= profile.image %>" alt="<%= profile.image %>" class="img"/>
+                <span><%= element.name %></span>
+            </div>
+            <div class="comment_space_body">
+              <h4><%= element.title %></h4>  
+              <div class="persons_quality">
+                <%element.votingOption.forEach(vote => {%>
+                  <%if(vote.mbti){ %>
+                    <span class="vote"><%=vote.mbti%></span>
+                  <%}%>
+                  <%if(vote.enneagram){ %>
+                    <span class="vote"><%=vote.enneagram%></span>
+                  <%}%>
+                  <%if(vote.Zadiac){ %>
+                    <span class="vote"><%=vote.Zadiac%></span>
+                  <%}%>
+
+                <%})%>
+              </div>
+              <p><%=element.detail%></p>
+            </div>
+            <div class="comment_foot">
+              <span class="fa fa-heart" onclick="likeFunc()"></span>
+              <span class="number"><%=element.like%></span>
+              </div>
+        </div>
+    <% }) %>
+    
+  </div>
+
+
+</div>
